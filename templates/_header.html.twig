@@ -1,6 +1,32 @@
+<style>
+    .header {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    nav ul li {
+        display: inline;
+        margin-right: 10px;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+    }
+
+    nav ul li a:hover {
+        text-decoration: underline;
+    }
+</style>
 <header>
-    <h1>Bienvenue sur CRUDcroustillant</h1>
-    <nav>
+    <nav class="header">
         <ul>
             <li><a href="{{ path('home') }}">Accueil</a></li>
             <li><a href="{{ path('burgers') }}">Nos Burgers</a></li>
