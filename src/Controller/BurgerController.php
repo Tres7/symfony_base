@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\BurgerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,10 +10,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class BurgerController extends AbstractController
 {
     #[Route('/burgers', name: 'burgers')]
-    public function list(): Response
-    {
-        return $this->render('burgers_list.html.twig');
+    public function index(BurgerRepository $burgerRepository):Response{
+        $burgers = $burgerRepository->findAll();
+        return $this->render('burgers_list.html.twig', ['burgers' => $burgers]);
     }
+//    #[Route('/burgers', name: 'burgers')]
+//    public function list(): Response
+//    {
+//        return $this->render('burgers_list.html.twig');
+//    }
 
     #[Route('/burger/{id}', name: 'burger/{id}')]
     public function show(int $id): Response
@@ -21,4 +27,6 @@ class BurgerController extends AbstractController
         $tab = [0,1,2,3];
         return $this->render('burger_show.html.twig', ['burger' => $tab[$id]]);
     }
+
+
 }
