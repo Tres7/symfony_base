@@ -1,0 +1,20 @@
+{% include '_header.html.twig' %}
+
+
+{% block body %}
+    Burgers finded in research :
+    {% if burgers_finded is not empty %}
+    <ul>
+        {% for burger_finded in burgers_finded %}
+            <li>{{ burger_finded.name }}</li>
+        {%endfor%}
+    </ul>
+    {% else %}
+        <p>No burger finded with the entrered ingredient</p>
+    {% endif %}
+
+
+    <nav> <a href="{{   path('somme')  }}">Lien vers la somme</a></nav>
+{% endblock %}
+
+{% include '_footer.html.twig' %}

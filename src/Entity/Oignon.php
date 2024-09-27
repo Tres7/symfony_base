@@ -15,8 +15,6 @@ class Oignon
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
 
     #[ORM\Column(length: 255)]
     private ?string $quantite = null;
@@ -26,6 +24,9 @@ class Oignon
      */
     #[ORM\ManyToMany(targetEntity: Burger::class, mappedBy: 'oignon')]
     private Collection $burgers;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $name = null;
 
     public function __construct()
     {
@@ -37,17 +38,6 @@ class Oignon
         return $this->id;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getQuantite(): ?string
     {
@@ -84,6 +74,18 @@ class Oignon
         if ($this->burgers->removeElement($burger)) {
             $burger->removeOignon($this);
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }
