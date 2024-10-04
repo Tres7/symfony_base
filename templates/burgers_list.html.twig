@@ -7,18 +7,40 @@
 
 {% block body %}
     Voici la liste burgers
-    <ul>
-        {% for burger in burgers %}
-            <li>{{ burger.name }}</li>
-        {% endfor %}
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for burger in burgers %}
+                <tr>
+                     <td>
+                         <a href="">{{ burger.name }}</a>
+                     </td>
+                    <td>
+                        <a class="btn btn-primary" href="">Edit</a>
+                    </td>
+                    <td><a class="btn btn-danger" href="">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{{ path('burger_new') }}">Edit</a>
+{#    <ul>#}
+{#        {% for burger in burgers %}#}
+{#            <li>{{ burger.name }}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
 
-    Burgers finded in research :
-    <ul>
-        {% for burger_finded in burgers_finded %}
-            <li>{{ burger_finded.name }}</li>
-        {%endfor%}
-    </ul>
+{#    Burgers finded in research :#}
+{#    <ul>#}
+{#        {% for burger_finded in burgers_finded %}#}
+{#            <li>{{ burger_finded.name }}</li>#}
+{#        {%endfor%}#}
+{#    </ul>#}
     <nav> <a href="{{   path('somme')  }}">Lien vers la somme</a></nav> 
 {% endblock %}
 

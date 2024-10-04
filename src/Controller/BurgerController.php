@@ -2,15 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Burger;
+use App\Form\BurgerType;
 use App\Repository\BurgerRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Config\Framework\RequestConfig;
 
 class BurgerController extends AbstractController
 {
     #[Route('/burgers', name: 'burgers')]
-    public function index(BurgerRepository $burgerRepository):Response{
+    public function burger_list(BurgerRepository $burgerRepository):Response{
         $burgers = $burgerRepository->findAll();
         return $this->render('burgers_list.html.twig', ['burgers' => $burgers]);
     }
@@ -19,14 +24,15 @@ class BurgerController extends AbstractController
 //    {
 //        return $this->render('burgers_list.html.twig');
 //    }
-
-    #[Route('/burger/{id}', name: 'burger/{id}')]
-    public function show(int $id): Response
-    {
-        //$tab = [0 => ["id" => 1],1 => ["id" => 2], 2 => ["id" => 2]];
-        $tab = [0,1,2,3];
-        return $this->render('burger_show.html.twig', ['burger' => $tab[$id]]);
-    }
+//    }
+//
+//    #[Route('/burger/{id}', name: 'burger/{id}')]
+//    public function show(int $id): Response
+//    {
+//        //$tab = [0 => ["id" => 1],1 => ["id" => 2], 2 => ["id" => 2]];
+//        $tab = [0,1,2,3];
+//        return $this->render('burger_show.html.twig', ['burger' => $tab[$id]]);
+//    }
 
     #[Route('/burgers/ingredient/{ingredient}', name: 'burgers_ingredient')]
     public function findBurgersWithIngredient(BurgerRepository $burgerRepository, string $ingredient): Response
@@ -45,6 +51,41 @@ class BurgerController extends AbstractController
         return $this->render('burger/top_burgers.html.twig', ['top_burgers' => $topBurgers]);
 
     }
+
+    #[Route('/burger/{id}/edit', name: 'burger_edit')]
+    public function editBurger(Burger $burger, Request $request, EntityManagerInterface $em):Response
+    {
+        $form = $this->createForm(BurgerType::class, $burger);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()  )
+        {
+            $em->flush();
+            $this->addFlash('success', 'Burger updated successfully');
+            return $this->redirectToRoute('burgers');
+
+        }
+        return $this->render('burger/edit_burger.html.twig',['form' => $form, 'burger' => $burger]);
+
+    }
+
+    #[Route('/burger/new', name: 'burger_new')]
+    public function addNewBurger(Request $request, EntityManagerInterface $em):Response
+    {
+        $burger = new Burger();
+        $form = $this->createForm(BurgerType::class, $burger);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()  )
+        {
+            $em->persist($burger);
+            $em->flush();
+            $this->addFlash('success', 'Burger created successfully');
+            return $this->redirectToRoute('burgers');
+
+        }
+        return $this->render('burger/new_burger.html.twig',['form' => $form]);
+
+    }
+
 
 
 }
