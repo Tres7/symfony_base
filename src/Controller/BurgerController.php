@@ -86,6 +86,15 @@ class BurgerController extends AbstractController
 
     }
 
+    #[Route('/burger/{id}/remove', name: 'burger_remove')]
+    public function remove(Burger $burger, EntityManagerInterface $em):Response
+    {
+        $em->remove($burger);
+        $em->flush();
+        $this->addFlash('success', 'Burger removed successfully');
+        return $this->redirectToRoute('burgers');
+    }
+
 
 
 }

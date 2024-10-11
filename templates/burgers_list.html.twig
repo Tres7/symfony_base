@@ -1,4 +1,5 @@
 {% include '_header.html.twig' %}
+{% include 'partials/flash.html.twig' %}
 
 
 {% block title %}
@@ -18,30 +19,24 @@
             {% for burger in burgers %}
                 <tr>
                      <td>
-                         <a href="">{{ burger.name }}</a>
+                         <a href="{{ path('burger_edit', {id: burger.id}) }}">{{ burger.name }}</a>
                      </td>
                     <td>
-                        <a class="btn btn-primary" href="">Edit</a>
+                        <a class="btn btn-primary btn-sm" href="{{ path('burger_edit', {id: burger.id}) }}">Edit</a>
                     </td>
-                    <td><a class="btn btn-danger" href="">Delete</a></td>
+
+                    <td>
+                        <form action="{{ path('burger_remove', {id: burger.id}) }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="{{ path('burger_new') }}">Edit</a>
-{#    <ul>#}
-{#        {% for burger in burgers %}#}
-{#            <li>{{ burger.name }}</li>#}
-{#        {% endfor %}#}
-{#    </ul>#}
-
-{#    Burgers finded in research :#}
-{#    <ul>#}
-{#        {% for burger_finded in burgers_finded %}#}
-{#            <li>{{ burger_finded.name }}</li>#}
-{#        {%endfor%}#}
-{#    </ul>#}
-    <nav> <a href="{{   path('somme')  }}">Lien vers la somme</a></nav> 
+    <a class="btn btn-primary" href="{{ path('burger_new') }}">Ajouter</a>
+{#    <nav> <a href="{{   path('somme')  }}">Lien vers la somme</a></nav> #}
 {% endblock %}
 
 {% include '_footer.html.twig' %} 

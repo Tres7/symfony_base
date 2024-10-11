@@ -32,8 +32,9 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                {{ form_row(form.sauce) }}
+            <div class="col-md-6" data-controller="sauce">
+                {{ form_row(form.sauce ) }}
+                <p data-sauce-target="selected">Sélectionnez une sauce</p>
             </div>
             <div class="col-md-6">
                 {{ form_row(form.image) }}

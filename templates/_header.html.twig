@@ -25,12 +25,19 @@
         text-decoration: underline;
     }
 </style>
+{% block javascripts %}
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
+{% endblock %}
+
 <header>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <nav class="header">
         <ul>
-            <li><a href="{{ path('home') }}">Home</a></li>
+            <li><a href="{{ path('home') }}">🏠</a></li>
             <li><a href="{{ path('burgers') }}">Ours Burgers</a></li>
             <li><a href="{{ path('burger_new') }}">Add new Burger</a></li>
         </ul>
     </nav>
 </header>
+<script src="{{ asset('build/app.js') }}"></script>
